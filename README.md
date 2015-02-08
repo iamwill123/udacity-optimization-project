@@ -55,4 +55,11 @@ SHORTENING THE CRITICAL RENDERING PATH
 - added async attribute to the google analytics script
 - added media="print" to the css/print link to unblock critical rendering path
 - inlined the perfmatters.js script
+- minified and inlined the styles from style.css file
+- moved the google font link to below the footer
+- optimized and resized the pizzeria.jpg for the index.html to pizzeria_small.jpg
 	
+PIZZERIA
+- changed the items[i].style.left to transform and transalte to improve FPS
+- moved the items variable down below the anonymous function that generates the sliding pizzas
+- also made the items variable available globally by adding window.items = document.querySelectorAll('.mover');
