@@ -1,8 +1,10 @@
-## Website Performance Optimization portfolio project
+Website Performance Optimization portfolio project
+==================================================
 
+My project can viewed at http://jordanfriesen.github.io/udacity-optimization-project/
 
-JORDANS NOTES
-================
+###JORDANS NOTES
+
 
 SHORTENING THE CRITICAL RENDERING PATH
 - added async attribute to the google analytics script
