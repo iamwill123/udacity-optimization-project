@@ -63,3 +63,4 @@ PIZZERIA
 - changed the items[i].style.left to transform and transalte to improve FPS
 - moved the items variable down below the anonymous function that generates the sliding pizzas
 - also made the items variable available globally by adding window.items = document.querySelectorAll('.mover');
+- implemented requestAnimationFrame as described in http://www.html5rocks.com/en/tutorials/speed/animations/ implementation starts at line 497 of main.js
