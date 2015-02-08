@@ -494,14 +494,35 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   console.log("Average time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
+// implemented requestAnimationFrame as seen on http://www.html5rocks.com/en/tutorials/speed/animations/
+// declare variable for known scroll position
+var latestKnownScrollY = 0,
+ticking = false;
+
+// Callback for scroll event
+function onScroll() {
+  latestKnownScrollY = window.scrollY;
+  requestTick();
+}
+
+// calls requestAnimationFrame
+function requestTick() {
+  if(ticking) {
+    window.requestAnimationFrame(updatePositions);
+      console.log('ticking is true');
+  }
+  ticking = true;
+}
+
 
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-    
+    //creat var yZ to remove one computation out of for loop
+    var yZ = latestKnownScrollY / 1250;
     for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    var phase = Math.sin(yZ + (i % 5));
     window.items[i].style.transform = 'translateX(' + (100*phase) + 'px)';
     // changed above items[i].style.left to transform and transalte to improve FPS
     // learned the benifits from http://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/ 
@@ -517,11 +538,11 @@ function updatePositions() {
   }
 }
 
-// runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+// runs requestAnimationFrame(updatePositions) on scroll
+window.addEventListener('scroll', onScroll, false);
 
 // Generates the sliding pizzas when the page loads.
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(function() {
   var cols = 8;
   var s = 256;
   for (var i = 0; i < 100; i++) {
@@ -538,6 +559,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // moved the items variable declaration down here to make it available globally
   window.items = document.querySelectorAll('.mover');
-  updatePositions();
-});
+
+  window.requestAnimationFrame(updatePositions);
+}));
 
