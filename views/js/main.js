@@ -448,12 +448,16 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+  // removed the dx variable declaration from the changePizzaSizes function for loop
+  var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+        var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+        document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+     for (var i = 2; i < 100; i++) {
+      var pizzasDiv = document.getElementById("randomPizzas");
+      pizzasDiv.appendChild(pizzaElementGenerator(i));
     }
   }
 
@@ -507,7 +511,7 @@ function onScroll() {
 
 // calls requestAnimationFrame
 function requestTick() {
-  if(ticking) {
+  if(!ticking) {
     window.requestAnimationFrame(updatePositions);
       console.log('ticking is true');
   }
@@ -536,10 +540,14 @@ function updatePositions() {
     var timesToUpdatePosition = window.performance.getEntriesByName("measure_frame_duration");
     logAverageFrame(timesToUpdatePosition);
   }
+   window.ticking = false;
 }
 
 // runs requestAnimationFrame(updatePositions) on scroll
 window.addEventListener('scroll', onScroll, false);
+
+// removed document.querySelector("#movingPizzas1") from the event listener function and into its own variable
+mPizzas = document.querySelector("#movingPizzas1");
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(function() {
@@ -554,12 +562,11 @@ document.addEventListener('DOMContentLoaded', window.requestAnimationFrame(funct
     // setting the intial position of the pizzas with elem.style.left
     elem.style.left = (i % cols) * s + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    mPizzas.appendChild(elem);
   }
 
   // moved the items variable declaration down here to make it available globally
   window.items = document.querySelectorAll('.mover');
-
   window.requestAnimationFrame(updatePositions);
 }));
 
