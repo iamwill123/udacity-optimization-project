@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var minifyCSS = require('gulp-minify-css');
 
 
 // Minify main.js in views folder JS
@@ -18,11 +19,13 @@ gulp.task('minpizzajs', function() {
         .pipe(gulp.dest('views/dist/js'));
 });
 
-// Watch Files For Changes
-// gulp.task('watch', function() {
-//      gulp.watch('js/*.js', ['scripts']);
-//      gulp.watch('scss/*.scss', ['sass']);
-// });
+// Minify bootstrap-grid.css in views/css and pipe to dist/css
+gulp.task('minify-pizzacss', function() {
+  gulp.src('./views/css/bootstrap-grid.css')
+    .pipe(rename("bootstrap-grid.min.css"))
+    .pipe(minifyCSS({keepBreaks:false}))
+    .pipe(gulp.dest('views/dist/css'))
+});
 
 // Default Task
-gulp.task('default', ['minpizzajs']);
+gulp.task('default', ['minpizzajs', 'minify-pizzacss']);
