@@ -1,5 +1,7 @@
 ## Website Performance Optimization portfolio project
 
+My project can viewed at http://jordanfriesen.github.io/udacity-optimization-project/
+
 
 JORDANS NOTES
 ================
