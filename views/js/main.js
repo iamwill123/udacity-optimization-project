@@ -512,7 +512,6 @@ function onScroll() {
 function requestTick() {
   if(!ticking) {
     window.requestAnimationFrame(updatePositions);
-      console.log('ticking is true');
   }
   ticking = true;
 }
